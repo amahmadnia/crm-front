@@ -1,154 +1,109 @@
-// src/Login.js
 import React, { useState } from 'react';
 import {
   Container,
-  Grid,
   Box,
   TextField,
   Button,
   Typography,
+  Alert,
 } from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import backgroundImage from './../assets/login-bg.png'; // Make sure to add an image in the src folder
-import useStore from './../store'; // Import Zustand store
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
-const theme = createTheme();
-
-function Login() {
-  const [email, setEmail] = useState('');
+const LoginPage = () => {
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
-  const { setToken } = useStore(); // Get the setToken action from Zustand store
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setError(null);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setError('');
+
+    if (!username || !password) {
+      setError('نام کاربری و رمز عبور را وارد کنید');
+      return;
+    }
+
+    setIsLoading(true);
 
     try {
-      const response = await fetch('https://your-api-endpoint/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      const data = await response.json();
-      localStorage.setItem('token', data.token); // Store the token in localStorage
-      setToken(data.token); // Set the token in Zustand store
-      console.log('Login successful:', data);
-      window.location.href = '/';
-    } catch (error) {
-      console.error('Error logging in:', error);
-      setError(
-        'Failed to log in. Please check your credentials and try again.'
+      const response = await axios.post(
+        'http://127.0.0.1:8000/api/accounts/login/',
+        {
+          username,
+          password,
+        }
       );
+
+      console.log('Login successful:', response.data.access);
+
+      // Store the token in cookies
+      Cookies.set('token', response.data.access, { expires: 7 });
+      // Handle successful login here (e.g., redirect to another page or store token)
+    } catch (err) {
+      if (err.response && err.response.status === 401) {
+        setError('نام کاربری یا رمز عبور اشتباه است');
+      } else {
+        setError('خطایی رخ داده است. لطفا دوباره تلاش کنید');
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth={false} disableGutters>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            height: '100vh',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Grid container spacing={0} sx={{ height: '100%' }}>
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              sx={{
-                backgroundImage: `url(${backgroundImage})`,
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-              }}
-            />
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              sx={{ padding: 4 }}
-            >
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  padding: 4,
-                  border: '1px solid #ccc',
-                  borderRadius: 2,
-                  boxShadow: 3,
-                  backgroundColor: 'white',
-                }}
-              >
-                <Typography component="h1" variant="h5">
-                  Sign In
-                </Typography>
-                <Box
-                  component="form"
-                  noValidate
-                  sx={{ mt: 1 }}
-                  onSubmit={handleLogin}
-                >
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    autoFocus
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  {error && (
-                    <Typography color="error" variant="body2">
-                      {error}
-                    </Typography>
-                  )}
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                  >
-                    Sign In
-                  </Button>
-                </Box>
-              </Box>
-            </Grid>
-          </Grid>
+    <Container component="main" maxWidth="xs">
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Typography component="h1" variant="h5">
+          ورود
+        </Typography>
+        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="username"
+            label="نام کاربری"
+            name="username"
+            autoComplete="username"
+            autoFocus
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="رمز عبور"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          {error && <Alert severity="error">{error}</Alert>}
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            disabled={isLoading}
+          >
+            {isLoading ? 'در حال بارگذاری...' : 'ورود'}
+          </Button>
         </Box>
-      </Container>
-    </ThemeProvider>
+      </Box>
+    </Container>
   );
-}
+};
 
-export default Login;
+export default LoginPage;

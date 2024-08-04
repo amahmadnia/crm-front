@@ -32,12 +32,10 @@ const NavBar = () => {
         </Box>
 
         <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
-          <StyledNavLink to="/" exact>
-            Home
-          </StyledNavLink>
+          <StyledNavLink to="/">Home</StyledNavLink>
           <StyledNavLink to="/about">لیست پرواز ها</StyledNavLink>
           <StyledNavLink to="/profile">پروفایل</StyledNavLink>
-          <StyledNavLink to="/contact">رزرو جایگاه</StyledNavLink>
+          <StyledNavLink to="/airlines">رزرو جایگاه</StyledNavLink>
         </Box>
 
         <Box sx={{ flexGrow: 0 }}>

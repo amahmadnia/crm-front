@@ -1,11 +1,16 @@
-// src/PrivateRoute.jsx
 import React from 'react';
-import { Navigate } from 'react-router-dom';
-import useStore from './../store';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
-const PrivateRoute = ({ children }) => {
-  const { isAuthenticated } = useStore();
-  return isAuthenticated ? children : <Navigate to="/login" />;
+const PrivateRoute = () => {
+  const token = Cookies.get('token');
+  const location = useLocation();
+
+  if (!token) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  return <Outlet />;
 };
 
 export default PrivateRoute;

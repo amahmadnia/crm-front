@@ -1,36 +1,31 @@
-// src/App.jsx
+import './App.css';
+
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Container } from '@mui/material';
 import LoginPage from './pages/Login';
 import HomePage from './pages/Home';
-import Airlines from './pages/AirLines';
 import PrivateRoute from './components/PrivateRoute';
 import Header from './components/Header';
 import Profile from './pages/Profile';
-import './App.css';
+import Airlines from './pages/AirLines';
+import AvailableFlights from './pages/AvailableFlights';
+import FlightReservation from './pages/FlightReservation';
 
 function App() {
   return (
     <Router>
-      <Header />
-      <Container
-        sx={{ paddingTop: '1rem', background: 'lightyellow', width: '100%' }}
-      >
-        {/* <Header /> */}
+      <Container>
+        <Header />
         <Routes>
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/" exact element={<HomePage />} />
-          <Route path="/profile" exact element={<Profile />} />
-          <Route path="/airlines" exact element={<Airlines />} />
-          {/* <Route
-            path="/"
-            element={
-              <PrivateRoute>
-                <HomePage />
-              </PrivateRoute>
-            }
-          /> */}
+          <Route element={<PrivateRoute />}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/airlines" element={<Airlines />} />
+            <Route path="/available-flights" element={<AvailableFlights />} />
+            <Route path="/flight-reservation" element={<FlightReservation />} />
+          </Route>
         </Routes>
       </Container>
     </Router>

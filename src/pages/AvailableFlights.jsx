@@ -1,7 +1,9 @@
 // src/components/ExampleComponent.js
 import React, { useEffect, useState } from 'react';
-import api from './../utils/api';
-import { useNavigate } from 'react-router-dom';
+import api from '../utils/api';
+import { extractHourAndMinute } from '../utils/helper';
+
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -15,9 +17,15 @@ import {
   DialogTitle,
   TextField,
   DialogActions,
+  List,
+  ListItem,
 } from '@mui/material';
 
 const ExampleComponent = () => {
+  const [searchParams] = useSearchParams();
+  const flightId = searchParams.get('id');
+  const flightDate = searchParams.get('date');
+
   const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -29,18 +37,13 @@ const ExampleComponent = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get('/flights'); // Replace with your API endpoint
+        const response = await api.get(
+          `/flight-schedules-list/?flight_id=${flightId}&date=${flightDate}`
+        );
 
-        const airlines = response.data;
+        const flights = response.data;
 
-        const newAirlines = airlines.map((airline) => {
-          return {
-            ...airline,
-            imgURL: `/${airline.id}.jpg`,
-          };
-        });
-
-        setData(newAirlines);
+        setData(flights);
       } catch (err) {
         setError(err);
       } finally {
@@ -67,27 +70,40 @@ const ExampleComponent = () => {
 
   return (
     <div>
+      <h2>Fucking flights</h2>
       <Grid container spacing={2}>
-        {data.map((airline) => (
-          <Grid item xs={12} sm={6} md={4} key={airline?.id}>
+        {data.map((flight) => (
+          <Grid item xs={12} sm={6} md={4} key={flight?.id}>
             <Card sx={{ maxWidth: 345 }}>
               <CardMedia
                 sx={{ height: 140, marginBottom: '' }}
-                image={airline.imgURL}
-                title={airline.name}
+                image={'/airplane.png'}
               />
               <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  {airline.name}
+                <Typography gutterBottom variant="h6" component="div">
+                  شماره پرواز: &nbsp;&nbsp;{flight?.flight_number}
                 </Typography>
-                {/* <Typography variant="body2" color="text.secondary">
-                  Description of the airline.
-                </Typography> */}
+                <Typography variant="body2" color="text.secondary">
+                  <List>
+                    <ListItem>هواپیمایی: {flight?.flight?.name}</ListItem>
+                    <ListItem>تاریخ پرواز: {flightDate}</ListItem>
+                    <ListItem>
+                      نوع پرواز:{' '}
+                      {flight?.flight_type === 'inbound' ? 'ورودی' : 'خروجی'}
+                    </ListItem>
+                    <ListItem>
+                      ساعت خروج: {extractHourAndMinute(flight?.departure_time)}
+                    </ListItem>
+                    <ListItem>
+                      ساعت ورود: {extractHourAndMinute(flight?.arrival_time)}
+                    </ListItem>
+                  </List>
+                </Typography>
               </CardContent>
               <CardActions>
                 <Button
                   size="small"
-                  onClick={() => handleLearnMoreClick(airline)}
+                  onClick={() => handleLearnMoreClick(flight)}
                 >
                   انتخاب پرواز
                 </Button>
@@ -132,9 +148,7 @@ const ExampleComponent = () => {
           <Button onClick={handleClose}>بستن</Button>
           <Button
             onClick={() => {
-              navigate(
-                `/available-flights?id=${selectedAirline.id}&date=${startDate}`
-              );
+              navigate(`/profile?id=${selectedAirline.id}&date=${startDate}`);
             }}
           >
             ثبت و ادامه
