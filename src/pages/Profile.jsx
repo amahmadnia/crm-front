@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Typography, Divider, Container, styled } from '@mui/material';
 import ProfileForm from './../components/ProfileForm';
+import api from '../utils/api';
 
 const CustomTypography = styled(Typography)(({ theme }) => ({
   lineHeight: '28px',

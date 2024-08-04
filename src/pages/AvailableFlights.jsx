@@ -19,6 +19,7 @@ import {
   DialogActions,
   List,
   ListItem,
+  Box,
 } from '@mui/material';
 
 const ExampleComponent = () => {
@@ -38,7 +39,7 @@ const ExampleComponent = () => {
     const fetchData = async () => {
       try {
         const response = await api.get(
-          `/flight-schedules-list/?flight_id=${flightId}&date=${flightDate}`
+          `/cip/flight-schedules-list/?flight_id=${flightId}&date=${flightDate}`
         );
 
         const flights = response.data;
@@ -70,7 +71,26 @@ const ExampleComponent = () => {
 
   return (
     <div>
-      <h2>Fucking flights</h2>
+      <h2>پرواز های موجود هواپیمایی </h2>
+      {data.length === 0 && (
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+          pt={10}
+        >
+          <Typography
+            variant="h5"
+            component="div"
+            color="textSecondary"
+            gutterBottom
+          >
+            هیچ پروازی در این تاریخ برای این ایرلاین موجود نیست
+          </Typography>
+        </Box>
+      )}
+
       <Grid container spacing={2}>
         {data.map((flight) => (
           <Grid item xs={12} sm={6} md={4} key={flight?.id}>

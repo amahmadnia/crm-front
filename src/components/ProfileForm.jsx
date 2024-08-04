@@ -1,6 +1,7 @@
 // src/components/EditForm.js
 import React, { useState } from 'react';
 import { Box, TextField, Button, Grid } from '@mui/material';
+import api from '../utils/api';
 
 const EditForm = () => {
   const [formData, setFormData] = useState({
@@ -11,6 +12,20 @@ const EditForm = () => {
     email: 'example@example.com',
     phoneNumber: '',
   });
+
+  const submitForm = async () => {
+    try {
+      const response = await api.post('/accounts/profile/', {
+        x: '3233',
+        y: '3434',
+      }); // Replace with your API endpoint
+      // setData(response.data);
+    } catch (err) {
+      // setError(err);
+    } finally {
+      // setLoading(false);
+    }
+  };
 
   const [errors, setErrors] = useState({});
 
@@ -118,7 +133,12 @@ const EditForm = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Button variant="contained" color="primary" type="submit">
+          <Button
+            variant="contained"
+            color="primary"
+            type="submit"
+            onClick={submitForm}
+          >
             ارسال
           </Button>
         </Grid>

@@ -29,7 +29,7 @@ const ExampleComponent = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get('/flights'); // Replace with your API endpoint
+        const response = await api.get('/cip/flights'); // Replace with your API endpoint
 
         const airlines = response.data;
 
