@@ -9,6 +9,7 @@ import {
   InputLabel,
   Box,
   FormHelperText,
+  Grid,
 } from '@mui/material';
 
 const PassengerForm = ({ type, passenger, hasSubmitted }) => {
@@ -42,76 +43,102 @@ const PassengerForm = ({ type, passenger, hasSubmitted }) => {
   }, [hasSubmitted, passenger]);
 
   return (
-    <Box sx={{ mb: 3, p: 2, border: '1px solid #ccc', borderRadius: 2 }}>
+    <Box
+      sx={{
+        mb: 3,
+        p: 3,
+        border: '1px solid #ccc',
+        borderRadius: 2,
+        boxShadow: 3,
+        '&:hover': {
+          boxShadow: 6,
+        },
+      }}
+    >
       <p>{String(hasSubmitted)}</p>
-      <TextField
-        label="نام لاتین"
-        name="firstName"
-        value={passenger.firstName}
-        onChange={handleChange}
-        fullWidth
-        required
-        error={errors.firstName}
-        helperText={errors.firstName ? 'این فیلد اجباری است' : ''}
-        sx={{ mb: 2 }}
-      />
-      <TextField
-        label="نام خانوادکی لاتین"
-        name="lastName"
-        value={passenger.lastName}
-        onChange={handleChange}
-        fullWidth
-        required
-        error={errors.lastName}
-        helperText={errors.lastName ? 'این فیلد اجباری است' : ''}
-        sx={{ mb: 2 }}
-      />
-      <TextField
-        label="تاریخ تولد"
-        name="birthDate"
-        value={passenger.birthDate}
-        onChange={handleChange}
-        type="date"
-        fullWidth
-        required
-        InputLabelProps={{ shrink: true }}
-        error={errors.birthDate}
-        helperText={errors.birthDate ? 'این فیلد اجباری است' : ''}
-        sx={{ mb: 2 }}
-      />
-      <FormControl fullWidth required sx={{ mb: 2 }} error={errors.gender}>
-        <InputLabel>جنسیت</InputLabel>
-        <Select
-          label="جنسیت"
-          name="gender"
-          value={passenger.gender}
-          onChange={handleChange}
-        >
-          <MenuItem value="">
-            <em>انتخاب کنید</em>
-          </MenuItem>
-          <MenuItem value="male">مرد</MenuItem>
-          <MenuItem value="female">زن</MenuItem>
-        </Select>
-        {errors.gender && <FormHelperText>این فیلد اجباری است</FormHelperText>}
-      </FormControl>
-      <TextField
-        label="شماره گذرنامه"
-        name="passportNumber"
-        value={passenger.passportNumber}
-        onChange={handleChange}
-        fullWidth
-        required
-        error={errors.passportNumber}
-        helperText={errors.passportNumber ? 'این فیلد اجباری است' : ''}
-      />
-      <TextField
-        label="افزودن توضیحات"
-        name="description"
-        value={passenger.description}
-        onChange={handleChange}
-        fullWidth
-      />
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="نام لاتین"
+            name="firstName"
+            value={passenger.firstName}
+            onChange={handleChange}
+            fullWidth
+            required
+            error={errors.firstName}
+            helperText={errors.firstName ? 'این فیلد اجباری است' : ''}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="نام خانوادکی لاتین"
+            name="lastName"
+            value={passenger.lastName}
+            onChange={handleChange}
+            fullWidth
+            required
+            error={errors.lastName}
+            helperText={errors.lastName ? 'این فیلد اجباری است' : ''}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="تاریخ تولد"
+            name="birthDate"
+            value={passenger.birthDate}
+            onChange={handleChange}
+            type="date"
+            fullWidth
+            required
+            InputLabelProps={{ shrink: true }}
+            error={errors.birthDate}
+            helperText={errors.birthDate ? 'این فیلد اجباری است' : ''}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <FormControl fullWidth required error={errors.gender}>
+            <InputLabel>جنسیت</InputLabel>
+            <Select
+              label="جنسیت"
+              name="gender"
+              value={passenger.gender}
+              onChange={handleChange}
+            >
+              <MenuItem value="">
+                <em>انتخاب کنید</em>
+              </MenuItem>
+              <MenuItem value="male">مرد</MenuItem>
+              <MenuItem value="female">زن</MenuItem>
+            </Select>
+            {errors.gender && (
+              <FormHelperText>این فیلد اجباری است</FormHelperText>
+            )}
+          </FormControl>
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            label="شماره گذرنامه"
+            name="passportNumber"
+            value={passenger.passportNumber}
+            onChange={handleChange}
+            fullWidth
+            required
+            error={errors.passportNumber}
+            helperText={errors.passportNumber ? 'این فیلد اجباری است' : ''}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            label="افزودن توضیحات"
+            name="description"
+            value={passenger.description}
+            onChange={handleChange}
+            fullWidth
+            multiline
+            rows={1}
+          />
+        </Grid>
+      </Grid>
     </Box>
   );
 };

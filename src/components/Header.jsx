@@ -17,6 +17,7 @@ const StyledNavLink = styled(NavLink)(({ theme }) => ({
   color: 'inherit',
   textDecoration: 'none',
   margin: theme.spacing(0, 2),
+  marginLeft: 70,
   '&.active': {
     fontWeight: 'bold',
     borderBottom: `2px solid ${theme.palette.primary.main}`,

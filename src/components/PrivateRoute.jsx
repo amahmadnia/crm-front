@@ -17,7 +17,7 @@ const PrivateRoute = () => {
     <Box sx={{ background: '#EDF6F8' }}>
       <Header />
       <Container sx={{ minHeight: '700px' }}>
-        <Outlet />;
+        <Outlet />
       </Container>
       <Footer />
     </Box>

@@ -16,11 +16,44 @@ const PassengerManager = ({ hasSubmitted }) => {
   } = useStore();
 
   return (
-    <>
-      <p>{String(hasSubmitted)}</p>
-      <Box sx={{ p: 3 }}>
-        <Typography variant="h4" gutterBottom>
-          مسافران بالغ
+    <Stack>
+      {/* <p>{String(hasSubmitted)}</p> */}
+      <Box
+        sx={{
+          width: '100%',
+          padding: '10px 20px',
+          mb: 2,
+          backgroundColor: '#fff',
+          borderRadius: 7,
+          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
+        <Typography variant="h6" gutterBottom sx={{ fontSize: 14 }}>
+          تعداد مسافرین
+        </Typography>
+        <Box sx={{ display: 'flex' }}>
+          <Typography variant="h6" gutterBottom sx={{ fontSize: 14 }}>
+            {passengers.adults.length} بزرگسال،&nbsp;{' '}
+          </Typography>
+          <Typography variant="h6" gutterBottom sx={{ fontSize: 14 }}>
+            {passengers.babies.length} نوزاد
+          </Typography>
+        </Box>
+      </Box>
+      <Box
+        sx={{
+          width: '100%',
+          padding: 4,
+          backgroundColor: '#fff',
+          borderRadius: 7,
+          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+        }}
+      >
+        <Typography variant="h6" gutterBottom pb={3} sx={{ fontSize: 14 }}>
+          مشخصات مسافرین بزرگسال
         </Typography>
         {passengers.adults.map((passenger) => (
           <PassengerForm
@@ -59,7 +92,7 @@ const PassengerManager = ({ hasSubmitted }) => {
           </Button>
         </Stack>
       </Box>
-    </>
+    </Stack>
   );
 };
 

@@ -33,14 +33,14 @@ const Counter = ({ label, min, max, category }) => {
       justifyContent="space-between"
       mb={2}
     >
-      <button
+      {/* <button
         onClick={() => {
           console.log('asuly' + store.passengersAdultCount);
           console.log('baby' + store.passengersBabyCount);
         }}
       >
         Sick
-      </button>
+      </button> */}
       <Typography variant="body1" sx={{ marginLeft: 2 }}>
         {label}
       </Typography>
@@ -50,6 +50,7 @@ const Counter = ({ label, min, max, category }) => {
         </IconButton>
         <Typography variant="body1" width={30} sx={{ textAlign: 'center' }}>
           {count}
+          {/* {category === 'adult' ? store. } */}
         </Typography>
         <IconButton onClick={handleIncrement} disabled={count === max}>
           <AddCircleOutlineIcon />

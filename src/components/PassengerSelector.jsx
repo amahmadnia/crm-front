@@ -7,9 +7,9 @@ const AgeSelector = () => {
     <Box
       sx={{
         width: 400,
-        padding: 2,
+        padding: 4,
         backgroundColor: '#fff',
-        borderRadius: 2,
+        borderRadius: 7,
         boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
       }}
     >

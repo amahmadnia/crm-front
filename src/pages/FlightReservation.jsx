@@ -19,6 +19,11 @@ import PassengerManager from '../components/PassengersForms/PassengersManager';
 import PassengerInfoTable from '../components/PassengersInfo/PassengersInfoTable';
 import PaymentBox from '../components/PassengersInfo/PaymentBox';
 
+const CustomButton = styled(Button)(({ theme }) => ({
+  background: '#BAC0E5',
+  color: '#0E1228',
+}));
+
 const QontoStepIconRoot = styled('div')(({ theme, ownerState }) => ({
   color: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#eaeaf0',
   display: 'flex',
@@ -139,16 +144,17 @@ export default function CustomizedSteppers() {
   const store = useStore();
 
   const [activeStep, setActiveStep] = React.useState(0);
+  const [hasSubmitted, setHasSubmitted] = React.useState(false);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+
+    if (activeStep === 1) setHasSubmitted(true);
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
-
-  const [hasSubmitted, setHasSubmitted] = React.useState(false);
 
   const renderStepContent = (step) => {
     switch (step) {
@@ -194,31 +200,30 @@ export default function CustomizedSteppers() {
             </Step>
           ))}
         </Stepper>
-        <button
+        {/* <button
           onClick={() => {
             console.log(store);
           }}
         >
           bussy
-        </button>
+        </button> */}
         <Box
           style={{ padding: '20px', display: 'flex', justifyContent: 'center' }}
         >
           {renderStepContent(activeStep)}
         </Box>
-        <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-          <Button
+        <Box sx={{ display: 'flex', flexDirection: 'row', pt: 10 }}>
+          <CustomButton
             color="inherit"
             disabled={activeStep === 0}
             onClick={handleBack}
-            sx={{ mr: 1, color: 'grey' }}
           >
             بازگشت
-          </Button>
+          </CustomButton>
           <Box sx={{ flex: '1 1 auto' }} />
-          <Button onClick={handleNext} sx={{ color: 'skyblue' }}>
+          <CustomButton onClick={handleNext}>
             {activeStep === steps.length - 1 ? 'پایان' : 'بعدی'}
-          </Button>
+          </CustomButton>
         </Box>
       </Stack>
     </>

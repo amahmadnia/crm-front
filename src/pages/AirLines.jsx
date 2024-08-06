@@ -129,7 +129,7 @@ const ExampleComponent = () => {
                   size="small"
                   onClick={() => handleLearnMoreClick(airline)}
                   sx={{
-                    backgroundColor: '#007bff',
+                    backgroundColor: '#4758B8',
                     color: '#fff',
                     '&:hover': {
                       backgroundColor: '#0056b3',
