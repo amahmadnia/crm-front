@@ -1,11 +1,14 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import { styled } from '@mui/material/styles';
+import Cookies from 'js-cookie';
 import LogoIcon from '@mui/icons-material/AcUnit'; // Replace with your actual logo
 
 const StyledNavLink = styled(NavLink)(({ theme }) => ({
@@ -19,23 +22,56 @@ const StyledNavLink = styled(NavLink)(({ theme }) => ({
 }));
 
 const NavBar = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const navigate = useNavigate();
+
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    Cookies.remove('token');
+    navigate('/login');
+  };
+
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ bgcolor: '#315F86', mb: 5 }}>
       <Toolbar>
         <Box sx={{ flexGrow: 0 }}>
-          <IconButton edge="start" color="inherit" aria-label="profile">
-            <Avatar
-              alt="Profile Picture"
-              src="https://via.placeholder.com/40"
-            />
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="profile"
+            onClick={handleMenuOpen}
+          >
+            <Avatar alt="Profile Picture" src="/avatar.jpg" />
           </IconButton>
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleMenuClose}
+            MenuListProps={{
+              sx: {
+                backgroundColor: '#a33e3e', // Light red background
+              },
+            }}
+          >
+            <MenuItem onClick={handleLogout} sx={{ color: '#fff' }}>
+              خروج
+            </MenuItem>
+          </Menu>
         </Box>
 
         <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
-          <StyledNavLink to="/">Home</StyledNavLink>
-          <StyledNavLink to="/about">لیست پرواز ها</StyledNavLink>
+          <StyledNavLink to="/">رزرو جایگاه</StyledNavLink>
+          <StyledNavLink to="/reserved-flights">
+            پرواز های رزرو شده
+          </StyledNavLink>
           <StyledNavLink to="/profile">پروفایل</StyledNavLink>
-          <StyledNavLink to="/airlines">رزرو جایگاه</StyledNavLink>
         </Box>
 
         <Box sx={{ flexGrow: 0 }}>

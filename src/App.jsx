@@ -4,6 +4,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Container } from '@mui/material';
 import LoginPage from './pages/Login';
+import SignUp from './pages/SignUp';
 import HomePage from './pages/Home';
 import PrivateRoute from './components/PrivateRoute';
 import Header from './components/Header';
@@ -16,11 +17,12 @@ function App() {
   return (
     <Router>
       <Container>
-        <Header />
+        {/* <Header /> */}
         <Routes>
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/sign-up" element={<SignUp />} />
           <Route element={<PrivateRoute />}>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<Airlines />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/airlines" element={<Airlines />} />
             <Route path="/available-flights" element={<AvailableFlights />} />

@@ -17,6 +17,7 @@ const theme = createTheme(
         textTransform: 'none',
       },
     },
+    
   },
 
   faIR // Load Farsi (Persian) locale

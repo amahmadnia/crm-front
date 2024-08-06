@@ -6,6 +6,7 @@ import {
   Button,
   Typography,
   Alert,
+  Paper,
 } from '@mui/material';
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -44,12 +45,12 @@ const LoginPage = () => {
       Cookies.set('token', response.data.access, { expires: 7 });
 
       // Redirect to home page upon successful login
-      navigate('/home');
+      navigate('/');
     } catch (err) {
       if (err.response && err.response.status === 401) {
         setError('نام کاربری یا رمز عبور اشتباه است');
       } else {
-        setError('خطایی رخ داده است. لطفا دوباره تلاش کنید');
+        setError('نام کاربری یا رمز عبور اشتباه است');
       }
     } finally {
       setIsLoading(false);
@@ -64,11 +65,13 @@ const LoginPage = () => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '100vh',
+        height: '80vh',
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
         borderRadius: 2,
         border: '1px solid rgba(0, 0, 0, 0.1)',
         backgroundColor: 'rgba(255, 255, 255, 0.8)',
+        mt: 5,
+        // padding: '20px 0',
       }}
     >
       <Box
@@ -90,6 +93,9 @@ const LoginPage = () => {
             p: 4,
           }}
         >
+          <Paper elevation={0}>
+            <img src="main-logo.png" />
+          </Paper>
           <Typography component="h1" variant="h5">
             ورود
           </Typography>
@@ -111,6 +117,11 @@ const LoginPage = () => {
               autoFocus
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              InputProps={{
+                style: {
+                  borderRadius: '48px',
+                },
+              }}
             />
             <TextField
               margin="normal"
@@ -123,13 +134,22 @@ const LoginPage = () => {
               autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              InputProps={{
+                style: {
+                  borderRadius: '48px',
+                },
+              }}
             />
-            {error && <Alert severity="error">{error}</Alert>}
+            {error && (
+              <Alert severity="error" sx={{ borderRadius: '48px', mt: 5 }}>
+                {error}
+              </Alert>
+            )}
             <Button
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 2, borderRadius: '48px' }}
               disabled={isLoading}
             >
               {isLoading ? 'در حال بارگذاری...' : 'ورود'}
