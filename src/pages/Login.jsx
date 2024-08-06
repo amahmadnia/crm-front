@@ -69,7 +69,7 @@ const LoginPage = () => {
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
         borderRadius: 2,
         border: '1px solid rgba(0, 0, 0, 0.1)',
-        backgroundColor: 'rgba(255, 255, 255, 0.8)',
+        // backgroundColor: 'rgba(255, 255, 255, 0.8)',
         mt: 5,
         // padding: '20px 0',
       }}

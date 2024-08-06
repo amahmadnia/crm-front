@@ -69,29 +69,74 @@ const ExampleComponent = () => {
 
   return (
     <div>
-      <Grid container spacing={2}>
+      <Grid container spacing={5}>
         {data.map((airline) => (
           <Grid item xs={12} sm={6} md={4} key={airline?.id}>
-            <Card sx={{ maxWidth: 345 }}>
+            <Card
+              sx={{
+                maxWidth: 345,
+                borderRadius: '16px',
+                boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+                transition: 'transform 0.3s, box-shadow 0.3s',
+                '&:hover': {
+                  transform: 'scale(1.05)',
+                  boxShadow: '0 8px 16px rgba(0,0,0,0.3)',
+                },
+                overflow: 'hidden',
+              }}
+            >
               <CardMedia
-                sx={{ height: 140, marginBottom: '' }}
+                sx={{
+                  height: 140,
+                  objectFit: 'cover',
+                  transition: 'transform 0.3s',
+                  '&:hover': {
+                    transform: 'scale(1.1)',
+                  },
+                }}
                 image={airline.imgURL}
                 title={airline.name}
               />
-              <CardContent>
+              <CardContent
+                sx={{
+                  padding: '16px',
+                  backgroundColor: '#f5f5f5',
+                  transition: 'background-color 0.3s',
+                  '&:hover': {
+                    backgroundColor: '#e0e0e0',
+                  },
+                }}
+              >
                 <Typography gutterBottom variant="h5" component="div">
                   {airline.name}
                 </Typography>
                 {/* <Typography variant="body2" color="text.secondary">
-                  Description of the airline.
-                </Typography> */}
+        Description of the airline.
+      </Typography> */}
               </CardContent>
-              <CardActions>
+              <CardActions
+                sx={{
+                  padding: '8px 16px',
+                  backgroundColor: '#f5f5f5',
+                  borderTop: '1px solid #ddd',
+                  '&:hover': {
+                    backgroundColor: '#e0e0e0',
+                  },
+                  justifyContent: 'flex-end',
+                }}
+              >
                 <Button
                   size="small"
                   onClick={() => handleLearnMoreClick(airline)}
+                  sx={{
+                    backgroundColor: '#007bff',
+                    color: '#fff',
+                    '&:hover': {
+                      backgroundColor: '#0056b3',
+                    },
+                  }}
                 >
-                  انتخاب پرواز
+                  انتخاب تاریخ پرواز
                 </Button>
               </CardActions>
             </Card>

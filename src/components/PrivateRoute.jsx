@@ -2,6 +2,8 @@ import React from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import Header from './Header';
+import { Box, Container } from '@mui/material';
+import Footer from './Footer';
 
 const PrivateRoute = () => {
   const token = Cookies.get('token');
@@ -12,10 +14,13 @@ const PrivateRoute = () => {
   }
 
   return (
-    <>
+    <Box sx={{ background: '#EDF6F8' }}>
       <Header />
-      <Outlet />;
-    </>
+      <Container sx={{ minHeight: '700px' }}>
+        <Outlet />;
+      </Container>
+      <Footer />
+    </Box>
   );
 };
 

@@ -16,20 +16,18 @@ import FlightReservation from './pages/FlightReservation';
 function App() {
   return (
     <Router>
-      <Container>
-        {/* <Header /> */}
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/sign-up" element={<SignUp />} />
-          <Route element={<PrivateRoute />}>
-            <Route path="/" element={<Airlines />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/airlines" element={<Airlines />} />
-            <Route path="/available-flights" element={<AvailableFlights />} />
-            <Route path="/flight-reservation" element={<FlightReservation />} />
-          </Route>
-        </Routes>
-      </Container>
+      {/* <Header /> */}
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/sign-up" element={<SignUp />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/" element={<Airlines />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/airlines" element={<Airlines />} />
+          <Route path="/available-flights" element={<AvailableFlights />} />
+          <Route path="/flight-reservation" element={<FlightReservation />} />
+        </Route>
+      </Routes>
     </Router>
   );
 }

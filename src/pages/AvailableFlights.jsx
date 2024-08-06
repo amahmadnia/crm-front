@@ -74,7 +74,6 @@ const ExampleComponent = () => {
   return (
     <div>
       <h2>پرواز های موجود هواپیمایی </h2>
-      <h2>{store.selectedAirlineId}</h2>
       {data.length === 0 && (
         <Box
           display="flex"
@@ -94,15 +93,44 @@ const ExampleComponent = () => {
         </Box>
       )}
 
-      <Grid container spacing={2}>
+      <Grid container spacing={2} pt={5}>
         {data.map((flight) => (
           <Grid item xs={12} sm={6} md={4} key={flight?.id}>
-            <Card sx={{ maxWidth: 345 }}>
+            <Card
+              sx={{
+                maxWidth: 345,
+                borderRadius: '16px',
+                boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+                transition: 'transform 0.3s, box-shadow 0.3s',
+                '&:hover': {
+                  transform: 'scale(1.05)',
+                  boxShadow: '0 8px 16px rgba(0,0,0,0.3)',
+                },
+                overflow: 'hidden',
+              }}
+            >
               <CardMedia
-                sx={{ height: 140, marginBottom: '' }}
-                image={`${store.selectedAirlineId}.jpg`}
+                sx={{
+                  height: 140,
+                  objectFit: 'cover',
+                  transition: 'transform 0.3s',
+                  '&:hover': {
+                    transform: 'scale(1.1)',
+                  },
+                }}
+                image={`${store?.selectedAirlineId}.jpg`}
+                title="Flight Image"
               />
-              <CardContent>
+              <CardContent
+                sx={{
+                  padding: '16px',
+                  backgroundColor: '#f5f5f5',
+                  transition: 'background-color 0.3s',
+                  '&:hover': {
+                    backgroundColor: '#e0e0e0',
+                  },
+                }}
+              >
                 <Typography gutterBottom variant="h6" component="div">
                   شماره پرواز: &nbsp;&nbsp;{flight?.flight_number}
                 </Typography>
@@ -123,10 +151,26 @@ const ExampleComponent = () => {
                   </List>
                 </Typography>
               </CardContent>
-              <CardActions>
+              <CardActions
+                sx={{
+                  padding: '8px 16px',
+                  backgroundColor: '#f5f5f5',
+                  borderTop: '1px solid #ddd',
+                  '&:hover': {
+                    backgroundColor: '#e0e0e0',
+                  },
+                }}
+              >
                 <Button
                   size="small"
                   onClick={() => handleLearnMoreClick(flight)}
+                  sx={{
+                    backgroundColor: '#007bff',
+                    color: '#fff',
+                    '&:hover': {
+                      backgroundColor: '#0056b3',
+                    },
+                  }}
                 >
                   انتخاب پرواز
                 </Button>

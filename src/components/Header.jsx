@@ -10,6 +10,8 @@ import MenuItem from '@mui/material/MenuItem';
 import { styled } from '@mui/material/styles';
 import Cookies from 'js-cookie';
 import LogoIcon from '@mui/icons-material/AcUnit'; // Replace with your actual logo
+import AirplaneTicketIcon from '@mui/icons-material/AirplaneTicket';
+import { Typography } from '@mui/material';
 
 const StyledNavLink = styled(NavLink)(({ theme }) => ({
   color: 'inherit',
@@ -39,7 +41,10 @@ const NavBar = () => {
   };
 
   return (
-    <AppBar position="static" sx={{ bgcolor: '#315F86', mb: 5 }}>
+    <AppBar
+      position="static"
+      sx={{ background: 'linear-gradient(to right, #3f51b5, #5c6bc0)', mb: 5 }}
+    >
       <Toolbar>
         <Box sx={{ flexGrow: 0 }}>
           <IconButton
@@ -66,7 +71,14 @@ const NavBar = () => {
           </Menu>
         </Box>
 
-        <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
+        <Box
+          sx={{
+            flexGrow: 1,
+            display: 'flex',
+            justifyContent: 'center',
+            marginRight: '-100px',
+          }}
+        >
           <StyledNavLink to="/">رزرو جایگاه</StyledNavLink>
           <StyledNavLink to="/reserved-flights">
             پرواز های رزرو شده
@@ -74,10 +86,16 @@ const NavBar = () => {
           <StyledNavLink to="/profile">پروفایل</StyledNavLink>
         </Box>
 
-        <Box sx={{ flexGrow: 0 }}>
-          <IconButton edge="end" color="inherit" aria-label="logo">
-            <LogoIcon />
-          </IconButton>
+        <Box sx={{ flexGrow: 0, display: 'flex', alignItems: 'center' }}>
+          <Typography variant="h6">CIP Reservation</Typography>&nbsp;&nbsp;
+          <img
+            src="/logo-3.webp"
+            style={{
+              borderRadius: '10px',
+              height: '40px',
+              // margin: '12px 0 7px',
+            }}
+          />
         </Box>
       </Toolbar>
     </AppBar>
