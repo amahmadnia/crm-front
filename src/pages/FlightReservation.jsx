@@ -16,6 +16,8 @@ import useStore from './../store';
 import AgeSelector from '../components/PassengerSelector';
 import { Box, Button, Typography } from '@mui/material';
 import PassengerManager from '../components/PassengersForms/PassengersManager';
+import PassengerInfoTable from '../components/PassengersInfo/PassengersInfoTable';
+import PaymentBox from '../components/PassengersInfo/PaymentBox';
 
 const QontoStepIconRoot = styled('div')(({ theme, ownerState }) => ({
   color: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#eaeaf0',
@@ -146,6 +148,8 @@ export default function CustomizedSteppers() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const [hasSubmitted, setHasSubmitted] = React.useState(false);
+
   const renderStepContent = (step) => {
     switch (step) {
       case 0:
@@ -153,12 +157,22 @@ export default function CustomizedSteppers() {
       case 1:
         return (
           <>
-            <Typography>Content for Step 2</Typography>
-            <PassengerManager />
+            <Box>
+              <p>{hasSubmitted}</p>
+            </Box>
+            <button onClick={() => setHasSubmitted(true)}>
+              {String(hasSubmitted)}
+            </button>
+            <PassengerManager hasSubmitted={hasSubmitted} />
           </>
         );
       case 2:
-        return <Typography>Content for Step 3</Typography>;
+        return (
+          <Box>
+            <PassengerInfoTable />
+            <PaymentBox />
+          </Box>
+        );
       default:
         return null;
     }
@@ -192,7 +206,6 @@ export default function CustomizedSteppers() {
         >
           {renderStepContent(activeStep)}
         </Box>
-        {store.selectedFlight.flight_type}
         <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
           <Button
             color="inherit"

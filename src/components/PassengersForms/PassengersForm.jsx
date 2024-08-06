@@ -1,5 +1,5 @@
 // src/components/PassengerForm.js
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import useStore from '../../store';
 import {
   TextField,
@@ -8,18 +8,42 @@ import {
   FormControl,
   InputLabel,
   Box,
+  FormHelperText,
 } from '@mui/material';
 
-const PassengerForm = ({ type, passenger }) => {
+const PassengerForm = ({ type, passenger, hasSubmitted }) => {
   const { updatePassengerDetails } = useStore();
+
+  const [errors, setErrors] = useState({
+    firstName: false,
+    lastName: false,
+    birthDate: false,
+    gender: false,
+    passportNumber: false,
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     updatePassengerDetails(type, passenger.id, { [name]: value });
   };
 
+  const checkError = (value) => value === '';
+
+  useEffect(() => {
+    if (hasSubmitted) {
+      setErrors({
+        firstName: checkError(passenger.firstName),
+        lastName: checkError(passenger.lastName),
+        birthDate: checkError(passenger.birthDate),
+        gender: checkError(passenger.gender),
+        passportNumber: checkError(passenger.passportNumber),
+      });
+    }
+  }, [hasSubmitted, passenger]);
+
   return (
     <Box sx={{ mb: 3, p: 2, border: '1px solid #ccc', borderRadius: 2 }}>
+      <p>{String(hasSubmitted)}</p>
       <TextField
         label="نام لاتین"
         name="firstName"
@@ -27,6 +51,8 @@ const PassengerForm = ({ type, passenger }) => {
         onChange={handleChange}
         fullWidth
         required
+        error={errors.firstName}
+        helperText={errors.firstName ? 'این فیلد اجباری است' : ''}
         sx={{ mb: 2 }}
       />
       <TextField
@@ -36,6 +62,8 @@ const PassengerForm = ({ type, passenger }) => {
         onChange={handleChange}
         fullWidth
         required
+        error={errors.lastName}
+        helperText={errors.lastName ? 'این فیلد اجباری است' : ''}
         sx={{ mb: 2 }}
       />
       <TextField
@@ -47,9 +75,11 @@ const PassengerForm = ({ type, passenger }) => {
         fullWidth
         required
         InputLabelProps={{ shrink: true }}
+        error={errors.birthDate}
+        helperText={errors.birthDate ? 'این فیلد اجباری است' : ''}
         sx={{ mb: 2 }}
       />
-      <FormControl fullWidth required sx={{ mb: 2 }}>
+      <FormControl fullWidth required sx={{ mb: 2 }} error={errors.gender}>
         <InputLabel>جنسیت</InputLabel>
         <Select
           label="جنسیت"
@@ -63,6 +93,7 @@ const PassengerForm = ({ type, passenger }) => {
           <MenuItem value="male">مرد</MenuItem>
           <MenuItem value="female">زن</MenuItem>
         </Select>
+        {errors.gender && <FormHelperText>این فیلد اجباری است</FormHelperText>}
       </FormControl>
       <TextField
         label="شماره گذرنامه"
@@ -71,6 +102,15 @@ const PassengerForm = ({ type, passenger }) => {
         onChange={handleChange}
         fullWidth
         required
+        error={errors.passportNumber}
+        helperText={errors.passportNumber ? 'این فیلد اجباری است' : ''}
+      />
+      <TextField
+        label="افزودن توضیحات"
+        name="description"
+        value={passenger.description}
+        onChange={handleChange}
+        fullWidth
       />
     </Box>
   );
