@@ -14,7 +14,7 @@ import StepConnector, {
 } from '@mui/material/StepConnector';
 import useStore from './../store';
 import AgeSelector from '../components/PassengerSelector';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 
 const QontoStepIconRoot = styled('div')(({ theme, ownerState }) => ({
   color: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#eaeaf0',
@@ -52,16 +52,8 @@ function QontoStepIcon(props) {
 }
 
 QontoStepIcon.propTypes = {
-  /**
-   * Whether this step is active.
-   * @default false
-   */
   active: PropTypes.bool,
   className: PropTypes.string,
-  /**
-   * Mark the step as completed. Is passed to child components.
-   * @default false
-   */
   completed: PropTypes.bool,
 };
 
@@ -132,20 +124,9 @@ function ColorlibStepIcon(props) {
 }
 
 ColorlibStepIcon.propTypes = {
-  /**
-   * Whether this step is active.
-   * @default false
-   */
   active: PropTypes.bool,
   className: PropTypes.string,
-  /**
-   * Mark the step as completed. Is passed to child components.
-   * @default false
-   */
   completed: PropTypes.bool,
-  /**
-   * The label displayed in the step icon.
-   */
   icon: PropTypes.node,
 };
 
@@ -162,6 +143,19 @@ export default function CustomizedSteppers() {
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const renderStepContent = (step) => {
+    switch (step) {
+      case 0:
+        return <AgeSelector />;
+      case 1:
+        return <Typography>Content for Step 2</Typography>;
+      case 2:
+        return <Typography>Content for Step 3</Typography>;
+      default:
+        return null;
+    }
   };
 
   return (
@@ -183,7 +177,7 @@ export default function CustomizedSteppers() {
         <Box
           style={{ padding: '20px', display: 'flex', justifyContent: 'center' }}
         >
-          <AgeSelector />
+          {renderStepContent(activeStep)}
         </Box>
         {store.selectedFlight.flight_type}
         <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
