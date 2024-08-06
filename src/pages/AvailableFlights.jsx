@@ -21,6 +21,7 @@ import {
   ListItem,
   Box,
 } from '@mui/material';
+import useStore from '../store';
 
 const ExampleComponent = () => {
   const [searchParams] = useSearchParams();
@@ -34,6 +35,7 @@ const ExampleComponent = () => {
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedAirline, setSelectedAirline] = useState(null);
   const [startDate, setStartDate] = useState('');
+  const store = useStore();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,9 +57,9 @@ const ExampleComponent = () => {
     fetchData();
   }, []);
 
-  const handleLearnMoreClick = (airline) => {
-    setSelectedAirline(airline);
-    setPopupOpen(true);
+  const handleLearnMoreClick = (flight) => {
+    store.setSelectedFlight(flight);
+    navigate(`/flight-reservation`);
   };
 
   const handleClose = () => {
@@ -72,6 +74,7 @@ const ExampleComponent = () => {
   return (
     <div>
       <h2>پرواز های موجود هواپیمایی </h2>
+      <h2>{store.selectedAirlineId}</h2>
       {data.length === 0 && (
         <Box
           display="flex"
@@ -97,7 +100,7 @@ const ExampleComponent = () => {
             <Card sx={{ maxWidth: 345 }}>
               <CardMedia
                 sx={{ height: 140, marginBottom: '' }}
-                image={'/airplane.png'}
+                image={`${store.selectedAirlineId}.jpg`}
               />
               <CardContent>
                 <Typography gutterBottom variant="h6" component="div">

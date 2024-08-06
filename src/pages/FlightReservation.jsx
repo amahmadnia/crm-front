@@ -152,7 +152,7 @@ ColorlibStepIcon.propTypes = {
 const steps = ['تعداد مسافرین', 'ثبت اطلاعات مسافرین', 'تایید اطلاعات'];
 
 export default function CustomizedSteppers() {
-  const reservedFlight = useStore();
+  const store = useStore();
 
   const [activeStep, setActiveStep] = React.useState(0);
 
@@ -185,6 +185,7 @@ export default function CustomizedSteppers() {
         >
           <AgeSelector />
         </Box>
+        {store.selectedFlight.flight_type}
         <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
           <Button
             color="inherit"

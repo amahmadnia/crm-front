@@ -16,6 +16,7 @@ import {
   TextField,
   DialogActions,
 } from '@mui/material';
+import useStore from '../store';
 
 const ExampleComponent = () => {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ const ExampleComponent = () => {
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedAirline, setSelectedAirline] = useState(null);
   const [startDate, setStartDate] = useState('');
+  const store = useStore();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -132,6 +134,7 @@ const ExampleComponent = () => {
           <Button onClick={handleClose}>بستن</Button>
           <Button
             onClick={() => {
+              store.setSelectedAirlineId(selectedAirline.id);
               navigate(
                 `/available-flights?id=${selectedAirline.id}&date=${startDate}`
               );

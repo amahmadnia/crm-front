@@ -16,9 +16,8 @@ const AgeSelector = () => {
       <Typography variant="h6" gutterBottom mb={3}>
         لطفا تعداد مسافرین را انتخاب کنید
       </Typography>
-      <Counter label="بزرگسال (+12)" min={1} max={10} />
-      <Counter label="خردسال (2 تا 7)" min={0} max={10} />
-      <Counter label="نوزاد (-2)" min={0} max={10} />
+      <Counter label="بزرگسال/خردسال (+7)" min={1} max={10} category="adult" />
+      <Counter label="نوزاد (-2)" min={0} max={10} category="baby" />
     </Box>
   );
 };

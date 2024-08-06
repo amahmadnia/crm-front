@@ -2,14 +2,22 @@ import React, { useState } from 'react';
 import { Box, IconButton, Typography } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import useStore from '../store';
 
-const Counter = ({ label, min, max }) => {
+const Counter = ({ label, min, max, category }) => {
   const [count, setCount] = useState(min);
+  const store = useStore();
 
-  const handleIncrement = () => {
+  const handleIncrement = (category) => {
     if (count < max) {
       setCount(count + 1);
     }
+
+    const newCount = count + 1;
+
+    category === 'adult'
+      ? store.setPassengerAdultCount(newCount)
+      : store.setPassengerBabyCount(newCount);
   };
 
   const handleDecrement = () => {
@@ -25,6 +33,14 @@ const Counter = ({ label, min, max }) => {
       justifyContent="space-between"
       mb={2}
     >
+      <button
+        onClick={() => {
+          console.log('asuly' + store.passengersAdultCount);
+          console.log('baby' + store.passengersBabyCount);
+        }}
+      >
+        Sick
+      </button>
       <Typography variant="body1" sx={{ marginLeft: 2 }}>
         {label}
       </Typography>
