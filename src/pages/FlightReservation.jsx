@@ -15,6 +15,7 @@ import StepConnector, {
 import useStore from './../store';
 import AgeSelector from '../components/PassengerSelector';
 import { Box, Button, Typography } from '@mui/material';
+import PassengerManager from '../components/PassengersForms/PassengersManager';
 
 const QontoStepIconRoot = styled('div')(({ theme, ownerState }) => ({
   color: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#eaeaf0',
@@ -150,7 +151,12 @@ export default function CustomizedSteppers() {
       case 0:
         return <AgeSelector />;
       case 1:
-        return <Typography>Content for Step 2</Typography>;
+        return (
+          <>
+            <Typography>Content for Step 2</Typography>
+            <PassengerManager />
+          </>
+        );
       case 2:
         return <Typography>Content for Step 3</Typography>;
       default:
@@ -174,6 +180,13 @@ export default function CustomizedSteppers() {
             </Step>
           ))}
         </Stepper>
+        <button
+          onClick={() => {
+            console.log(store);
+          }}
+        >
+          bussy
+        </button>
         <Box
           style={{ padding: '20px', display: 'flex', justifyContent: 'center' }}
         >
