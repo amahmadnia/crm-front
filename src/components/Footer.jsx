@@ -22,9 +22,6 @@ const Footer = () => {
             تماس با ما
           </Typography>
           <Typography variant="body1" gutterBottom>
-            آدرس: خیابان ولیعصر، تهران
-          </Typography>
-          <Typography variant="body1" gutterBottom>
             تلفن: 021-12345678
           </Typography>
           <Typography variant="body1" gutterBottom>
@@ -43,25 +40,6 @@ const Footer = () => {
             sx={{ mb: 1, '&:hover': { color: '#ffeb3b' } }}
           >
             درباره ما
-          </Link>
-
-          <Link
-            href="#"
-            color="inherit"
-            underline="none"
-            display="block"
-            sx={{ mb: 1, '&:hover': { color: '#ffeb3b' } }}
-          >
-            تورها
-          </Link>
-          <Link
-            href="#"
-            color="inherit"
-            underline="none"
-            display="block"
-            sx={{ mb: 1, '&:hover': { color: '#ffeb3b' } }}
-          >
-            تماس با ما
           </Link>
         </Grid>
         <Grid item xs={12} sm={4}>
@@ -112,9 +90,6 @@ const Footer = () => {
           </IconButton>
         </Grid>
       </Grid>
-      <Box mt={4}>
-        <Typography variant="body2">© 2024 تمامی حقوق محفوظ است.</Typography>
-      </Box>
     </Box>
   );
 };
