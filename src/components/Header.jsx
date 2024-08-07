@@ -12,6 +12,7 @@ import Cookies from 'js-cookie';
 import LogoIcon from '@mui/icons-material/AcUnit'; // Replace with your actual logo
 import AirplaneTicketIcon from '@mui/icons-material/AirplaneTicket';
 import { Typography } from '@mui/material';
+import useProfileStore from '../store/profileStore';
 
 const StyledNavLink = styled(NavLink)(({ theme }) => ({
   color: 'inherit',
@@ -27,6 +28,8 @@ const StyledNavLink = styled(NavLink)(({ theme }) => ({
 const NavBar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
+
+  const { profile } = useProfileStore();
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -71,7 +74,7 @@ const NavBar = () => {
             </MenuItem>
           </Menu>
         </Box>
-
+        {profile.first_name} {profile.last_name}
         <Box
           sx={{
             flexGrow: 1,
@@ -86,7 +89,6 @@ const NavBar = () => {
           </StyledNavLink>
           <StyledNavLink to="/profile">پروفایل</StyledNavLink>
         </Box>
-
         <Box sx={{ flexGrow: 0, display: 'flex', alignItems: 'center' }}>
           <Typography variant="h6">CIP Reservation</Typography>&nbsp;&nbsp;
           <img

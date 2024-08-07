@@ -99,28 +99,6 @@ const ExampleComponent = () => {
 
   return (
     <>
-      {/* <Box
-        sx={{
-          width: '100%',
-          padding: '10px 20px',
-          mb: 2,
-          backgroundColor: '#fff',
-          borderRadius: 7,
-          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}
-      >
-        <Typography variant="h6" gutterBottom sx={{ fontSize: 14 }}>
-          تعداد مسافرین
-        </Typography>
-        <Box sx={{ display: 'flex' }}>
-          <Typography variant="h6" gutterBottom sx={{ fontSize: 14 }}>
-            womp
-          </Typography>
-        </Box>
-      </Box> */}
       <Box>
         <Grid container spacing={5} pt={6}>
           <Box

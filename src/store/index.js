@@ -6,6 +6,19 @@ const useStore = create((set) => ({
   selectedFlight: null,
   selectedAirlineId: null,
 
+  profileInfo: {
+    id: null,
+    username: null,
+    email: null,
+    first_name: null,
+    last_name: null,
+    convoyName: null,
+    phoneNumber: null,
+    profilePicture: null,
+  },
+  setProfile: (newProfile) =>
+    set((state) => ({ profile: { ...state.profile, ...newProfile } })),
+
   passengersAdultCount: 1,
   passengersBabyCount: 0,
 
@@ -25,6 +38,8 @@ const useStore = create((set) => ({
 
   login: () => set({ isAuthenticated: true }),
   logout: () => set({ isAuthenticated: false }),
+
+  setProfileInfo: (val) => set({ profileInfo: val }),
 
   setSelectedFlight: (val) => set({ selectedFlight: val }),
   setSelectedAirlineId: (val) => set({ selectedAirlineId: val }),

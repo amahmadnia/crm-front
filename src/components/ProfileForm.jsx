@@ -1,38 +1,37 @@
-// src/components/EditForm.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, TextField, Button, Grid } from '@mui/material';
+import useProfileStore from '../store/profileStore';
 import api from '../utils/api';
+import { toast } from 'react-toastify';
 
 const EditForm = () => {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    convoyName: '',
-    username: 'exampleUser',
-    email: 'example@example.com',
-    phoneNumber: '',
-  });
+  const { profile, setProfile } = useProfileStore((state) => ({
+    profile: state.profile,
+    setProfile: state.setProfile,
+  }));
+  const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    // Sync local formData with the store profile data
+    setFormData(profile);
+  }, [profile]);
+
+  const [formData, setFormData] = useState(profile);
 
   const submitForm = async () => {
     try {
-      const response = await api.post('/accounts/profile/', {
-        x: '3233',
-        y: '3434',
-      }); // Replace with your API endpoint
-      // setData(response.data);
+      const response = await api.post('/accounts/profile/', formData); // Replace with your API endpoint
+      setProfile(response.data);
+      toast.success('اطلاعات پروفایل با موفقیت ویرایش شد');
     } catch (err) {
-      // setError(err);
-    } finally {
-      // setLoading(false);
+      console.error('Failed to submit form', err);
     }
   };
-
-  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    if (value.trim() === '') {
+    if (typeof value === 'string' && value.trim() === '') {
       setErrors((prevErrors) => ({
         ...prevErrors,
         [name]: 'این فیلد اجباری است',
@@ -45,19 +44,29 @@ const EditForm = () => {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     let formErrors = {};
-    Object.keys(formData).forEach((field) => {
-      if (formData[field].trim() === '') {
+
+    const { id, profilePicture, ...rest } = formData;
+
+    const newFormData = rest;
+    Object.keys(newFormData).forEach((field) => {
+      if (
+        typeof newFormData[field] !== 'string' ||
+        newFormData[field].trim() === ''
+      ) {
         formErrors[field] = 'این فیلد اجباری است';
       }
     });
     setErrors(formErrors);
+    console.log('hello');
+    console.log(formErrors);
 
     if (Object.keys(formErrors).length === 0) {
       // Handle form submission
-      console.log(formData);
+      console.log('sdkhsgdk');
+
+      submitForm();
     }
   };
 
@@ -73,30 +82,29 @@ const EditForm = () => {
       }}
       noValidate
       autoComplete="off"
-      onSubmit={handleSubmit}
     >
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <TextField
             label="نام"
-            name="firstName"
-            value={formData.firstName}
+            name="first_name"
+            value={formData.first_name}
             onChange={handleChange}
             required
-            error={!!errors.firstName}
-            helperText={errors.firstName}
+            error={!!errors.first_name}
+            helperText={errors.first_name}
             variant="outlined"
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             label="نام خانوادگی"
-            name="lastName"
-            value={formData.lastName}
+            name="last_name"
+            value={formData.last_name}
             onChange={handleChange}
             required
-            error={!!errors.lastName}
-            helperText={errors.lastName}
+            error={!!errors.last_name}
+            helperText={errors.last_name}
             variant="outlined"
           />
         </Grid>
@@ -146,14 +154,17 @@ const EditForm = () => {
         </Grid>
         <Grid item xs={12}>
           <Button
+            onClick={handleSubmit}
             variant="contained"
             color="primary"
-            type="submit"
-            onClick={submitForm}
+            // type="submit"
             sx={{
               padding: '10px 20px',
-              backgroundColor: '#00796B',
-              '&:hover': { backgroundColor: '#004D40' },
+              backgroundColor: '#4758B8',
+              color: '#fff',
+              '&:hover': {
+                backgroundColor: '#0056b3',
+              },
               borderRadius: '8px',
               marginLeft: '20px !important',
             }}

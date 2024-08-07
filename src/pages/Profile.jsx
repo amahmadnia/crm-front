@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Typography, Divider, Container, styled } from '@mui/material';
 import ProfileForm from './../components/ProfileForm';
 import api from '../utils/api';
+import useStore from '../store';
+import useProfileStore from '../store/profileStore';
 
 const CustomTypography = styled(Typography)(({ theme }) => ({
   lineHeight: '28px',
@@ -10,6 +12,30 @@ const CustomTypography = styled(Typography)(({ theme }) => ({
 }));
 
 function App() {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const store = useStore();
+  const setProfile = useProfileStore((state) => state.setProfile);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await api.get('/accounts/profile'); // Replace with your API endpoint
+        setProfile(response.data);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [setProfile]);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
   return (
     <Container>
       <Box

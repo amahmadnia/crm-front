@@ -14,23 +14,29 @@ import AvailableFlights from './pages/AvailableFlights';
 import FlightReservation from './pages/FlightReservation';
 import ReservedFlights from './pages/ReservedFlights';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function App() {
   return (
-    <Router>
-      {/* <Header /> */}
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/sign-up" element={<SignUp />} />
-        <Route element={<PrivateRoute />}>
-          <Route path="/" element={<Airlines />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/airlines" element={<Airlines />} />
-          <Route path="/available-flights" element={<AvailableFlights />} />
-          <Route path="/flight-reservation" element={<FlightReservation />} />
-          <Route path="/reserved-flights" element={<ReservedFlights />} />
-        </Route>
-      </Routes>
-    </Router>
+    <>
+      <Router>
+        {/* <Header /> */}
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route element={<PrivateRoute />}>
+            <Route path="/" element={<Airlines />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/airlines" element={<Airlines />} />
+            <Route path="/available-flights" element={<AvailableFlights />} />
+            <Route path="/flight-reservation" element={<FlightReservation />} />
+            <Route path="/reserved-flights" element={<ReservedFlights />} />
+          </Route>
+        </Routes>
+      </Router>
+      <ToastContainer />
+    </>
   );
 }
 
