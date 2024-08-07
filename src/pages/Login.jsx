@@ -7,17 +7,21 @@ import {
   Typography,
   Alert,
   Paper,
+  Grid,
+  Link,
+  Checkbox,
+  FormControlLabel,
 } from '@mui/material';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom'; // Assuming you're using react-router for navigation
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate(); // For redirection
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -58,60 +62,41 @@ const LoginPage = () => {
   };
 
   return (
-    <Container
-      component="main"
-      maxWidth="lg"
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '80vh',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-        borderRadius: 2,
-        border: '1px solid rgba(0, 0, 0, 0.1)',
-        // backgroundColor: 'rgba(255, 255, 255, 0.8)',
-        mt: 5,
-        // padding: '20px 0',
-      }}
-    >
-      <Box
-        sx={{
-          display: 'flex',
-          width: '100%',
-          height: '100%',
-          borderRadius: 2,
-          overflow: 'hidden',
-        }}
-      >
+    <Grid container component="main" sx={{ height: '100vh' }}>
+      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <Box
           sx={{
-            flex: 1,
+            my: 8,
+            mx: 4,
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'center',
             alignItems: 'center',
-            p: 4,
+            padding: 3,
           }}
         >
-          <Paper elevation={0}>
-            <img src="main-logo.png" />
-          </Paper>
+          <img
+            src="main-logo.png"
+            alt="logo"
+            style={{ marginBottom: '20px' }}
+          />
           <Typography component="h1" variant="h5">
-            ورود
+            خوش آمدید!
+          </Typography>
+          <Typography variant="subtitle1" color="textSecondary">
+            برای ورود به پرتال لاگین کنید
           </Typography>
           <Box
             component="form"
             onSubmit={handleSubmit}
             noValidate
-            sx={{ mt: 1 }}
-            width={'90%'}
+            sx={{ mt: 1, width: '100%' }}
           >
             <TextField
               margin="normal"
               required
               fullWidth
               id="username"
-              label="نام کاربری"
+              label="نام کاربری / ایمیل"
               name="username"
               autoComplete="username"
               autoFocus
@@ -128,7 +113,7 @@ const LoginPage = () => {
               required
               fullWidth
               name="password"
-              label="رمز عبور"
+              label="رمزعبور"
               type="password"
               id="password"
               autoComplete="current-password"
@@ -140,8 +125,12 @@ const LoginPage = () => {
                 },
               }}
             />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="مرا به خاطر بسپار"
+            />
             {error && (
-              <Alert severity="error" sx={{ borderRadius: '48px', mt: 5 }}>
+              <Alert severity="error" sx={{ borderRadius: '48px', mt: 2 }}>
                 {error}
               </Alert>
             )}
@@ -149,23 +138,51 @@ const LoginPage = () => {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2, borderRadius: '48px' }}
+              sx={{
+                mt: 3,
+                mb: 2,
+                borderRadius: '48px',
+                backgroundColor: '#6200ea',
+                '&:hover': {
+                  backgroundColor: '#3700b3',
+                },
+              }}
               disabled={isLoading}
             >
               {isLoading ? 'در حال بارگذاری...' : 'ورود'}
             </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2" sx={{ color: '#6200ea' }}>
+                  {'حساب ندارید؟ ثبت نام'}
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href="#" variant="body2">
+                  {/* Forgot your password? */}
+                </Link>
+              </Grid>
+            </Grid>
           </Box>
         </Box>
-        <Box
-          sx={{
-            flex: 1,
-            backgroundImage: 'url(login-bg.jpg)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
-      </Box>
-    </Container>
+      </Grid>
+      <Grid
+        item
+        xs={false}
+        sm={4}
+        md={7}
+        sx={{
+          backgroundImage: 'url(/login-bg-2.jpg)',
+          backgroundRepeat: 'no-repeat',
+          backgroundColor: (t) =>
+            t.palette.mode === 'light'
+              ? t.palette.grey[50]
+              : t.palette.grey[900],
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      />
+    </Grid>
   );
 };
 
