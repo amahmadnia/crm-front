@@ -55,7 +55,6 @@ const PassengerForm = ({ type, passenger, hasSubmitted }) => {
         },
       }}
     >
-      <p>{String(hasSubmitted)}</p>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <TextField
@@ -71,7 +70,7 @@ const PassengerForm = ({ type, passenger, hasSubmitted }) => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            label="نام خانوادکی لاتین"
+            label="نام خانوادگی لاتین"
             name="lastName"
             value={passenger.lastName}
             onChange={handleChange}

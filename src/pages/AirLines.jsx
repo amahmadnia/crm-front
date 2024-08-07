@@ -15,8 +15,39 @@ import {
   DialogTitle,
   TextField,
   DialogActions,
+  Box,
+  styled,
 } from '@mui/material';
 import useStore from '../store';
+
+const StyledDialog = styled(Dialog)(({ theme }) => ({
+  '& .MuiPaper-root': {
+    width: '500px',
+    borderRadius: '15px',
+    background: 'linear-gradient(to right, #ece9e6, #ffffff)',
+    boxShadow: theme.shadows[5],
+  },
+  '& .MuiDialogTitle-root': {
+    backgroundColor: '#4758B8',
+    color: '#fff',
+    padding: theme.spacing(2),
+  },
+  '& .MuiDialogContent-root': {
+    padding: theme.spacing(3),
+  },
+  '& .MuiDialogActions-root': {
+    padding: theme.spacing(2),
+    justifyContent: 'space-between',
+  },
+}));
+
+const StyledButton = styled(Button)(({ theme }) => ({
+  backgroundColor: '#4758B8',
+  color: '#fff',
+  '&:hover': {
+    backgroundColor: '#0056b3',
+  },
+}));
 
 const ExampleComponent = () => {
   const navigate = useNavigate();
@@ -69,9 +100,35 @@ const ExampleComponent = () => {
 
   return (
     <div>
-      <Grid container spacing={5}>
+      <Grid container spacing={5} pt={6}>
+        <Box
+          sx={{
+            width: '105%',
+            padding: '10px 20px',
+            mb: 0,
+
+            backgroundColor: '#F8F8FC',
+            borderRadius: 7,
+            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginRight: '-30px',
+          }}
+        >
+          <Typography variant="h6" gutterBottom>
+            لیست هواپیمایی ها
+          </Typography>
+        </Box>
         {data.map((airline) => (
-          <Grid item xs={12} sm={6} md={4} key={airline?.id}>
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            md={4}
+            key={airline?.id}
+            justifyContent={'center'}
+          >
             <Card
               sx={{
                 maxWidth: 345,
@@ -100,10 +157,9 @@ const ExampleComponent = () => {
               <CardContent
                 sx={{
                   padding: '16px',
-                  backgroundColor: '#f5f5f5',
                   transition: 'background-color 0.3s',
                   '&:hover': {
-                    backgroundColor: '#e0e0e0',
+                    backgroundColor: '#f5f5f5',
                   },
                 }}
               >
@@ -117,10 +173,10 @@ const ExampleComponent = () => {
               <CardActions
                 sx={{
                   padding: '8px 16px',
-                  backgroundColor: '#f5f5f5',
                   borderTop: '1px solid #ddd',
                   '&:hover': {
-                    backgroundColor: '#e0e0e0',
+                    backgroundColor: '#f5f5f5',
+                    // backgroundColor: '#e0e0e0',
                   },
                   justifyContent: 'flex-end',
                 }}
@@ -144,23 +200,14 @@ const ExampleComponent = () => {
         ))}
       </Grid>
 
-      <Dialog
-        open={popupOpen}
-        onClose={handleClose}
-        PaperProps={{
-          style: {
-            width: '500px', // Set the width of the dialog here
-          },
-        }}
-      >
+      <StyledDialog open={popupOpen} onClose={handleClose}>
         <DialogTitle>تاریخ پرواز را انتخاب کنید</DialogTitle>
         <DialogContent>
           {selectedAirline && (
             <div>
-              <Typography variant="h6">
+              <Typography variant="h6" style={{ marginBottom: '20px' }}>
                 هواپیمایی {selectedAirline.name}
               </Typography>
-
               <TextField
                 label="تاریخ پرواز"
                 type="date"
@@ -176,8 +223,8 @@ const ExampleComponent = () => {
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>بستن</Button>
-          <Button
+          <StyledButton onClick={handleClose}>بستن</StyledButton>
+          <StyledButton
             onClick={() => {
               store.setSelectedAirlineId(selectedAirline.id);
               navigate(
@@ -186,9 +233,9 @@ const ExampleComponent = () => {
             }}
           >
             ثبت و ادامه
-          </Button>
+          </StyledButton>
         </DialogActions>
-      </Dialog>
+      </StyledDialog>
     </div>
   );
 };

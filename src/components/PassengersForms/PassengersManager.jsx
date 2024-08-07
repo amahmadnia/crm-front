@@ -50,6 +50,7 @@ const PassengerManager = ({ hasSubmitted }) => {
           backgroundColor: '#fff',
           borderRadius: 7,
           boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+          marginBottom: 5,
         }}
       >
         <Typography variant="h6" gutterBottom pb={3} sx={{ fontSize: 14 }}>
@@ -71,9 +72,20 @@ const PassengerManager = ({ hasSubmitted }) => {
             حذف بزرگسال
           </Button>
         </Stack>
+      </Box>
 
-        <Typography variant="h4" gutterBottom>
-          مسافران کودک
+      <Box
+        sx={{
+          width: '100%',
+          padding: 4,
+          backgroundColor: '#fff',
+          borderRadius: 7,
+          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+          marginBottom: 10,
+        }}
+      >
+        <Typography variant="h6" gutterBottom pb={3} sx={{ fontSize: 14 }}>
+          مشخصات مسافرین نوزاد
         </Typography>
         {passengers.babies.map((passenger) => (
           <PassengerForm

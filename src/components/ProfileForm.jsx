@@ -64,12 +64,18 @@ const EditForm = () => {
   return (
     <Box
       component="form"
-      sx={{ '& .MuiTextField-root': { m: 1, width: '100%' } }}
+      sx={{
+        '& .MuiTextField-root': { m: 2, width: '100%' },
+        p: '40px 60px 40px 30px',
+        borderRadius: 7,
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+        backgroundColor: '#fff',
+      }}
       noValidate
       autoComplete="off"
       onSubmit={handleSubmit}
     >
-      <Grid container spacing={2}>
+      <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <TextField
             label="نام"
@@ -79,6 +85,7 @@ const EditForm = () => {
             required
             error={!!errors.firstName}
             helperText={errors.firstName}
+            variant="outlined"
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -90,6 +97,7 @@ const EditForm = () => {
             required
             error={!!errors.lastName}
             helperText={errors.lastName}
+            variant="outlined"
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -101,6 +109,7 @@ const EditForm = () => {
             required
             error={!!errors.convoyName}
             helperText={errors.convoyName}
+            variant="outlined"
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -110,6 +119,7 @@ const EditForm = () => {
             value={formData.username}
             InputProps={{ readOnly: true }}
             required
+            variant="outlined"
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -119,6 +129,7 @@ const EditForm = () => {
             value={formData.email}
             InputProps={{ readOnly: true }}
             required
+            variant="outlined"
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -130,6 +141,7 @@ const EditForm = () => {
             required
             error={!!errors.phoneNumber}
             helperText={errors.phoneNumber}
+            variant="outlined"
           />
         </Grid>
         <Grid item xs={12}>
@@ -138,6 +150,13 @@ const EditForm = () => {
             color="primary"
             type="submit"
             onClick={submitForm}
+            sx={{
+              padding: '10px 20px',
+              backgroundColor: '#00796B',
+              '&:hover': { backgroundColor: '#004D40' },
+              borderRadius: '8px',
+              marginLeft: '20px !important',
+            }}
           >
             ارسال
           </Button>

@@ -12,6 +12,7 @@ import Profile from './pages/Profile';
 import Airlines from './pages/AirLines';
 import AvailableFlights from './pages/AvailableFlights';
 import FlightReservation from './pages/FlightReservation';
+import ReservedFlights from './pages/ReservedFlights';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/airlines" element={<Airlines />} />
           <Route path="/available-flights" element={<AvailableFlights />} />
           <Route path="/flight-reservation" element={<FlightReservation />} />
+          <Route path="/reserved-flights" element={<ReservedFlights />} />
         </Route>
       </Routes>
     </Router>

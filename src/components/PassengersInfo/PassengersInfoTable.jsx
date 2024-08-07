@@ -25,7 +25,7 @@ const PassengerTable = () => {
           <TableRow>
             <TableCell>نوع</TableCell>
             <TableCell>نام لاتین</TableCell>
-            <TableCell>نام خانوادکی لاتین</TableCell>
+            <TableCell>نام خانوادگی لاتین</TableCell>
             <TableCell>تاریخ تولد</TableCell>
             <TableCell>جنسیت</TableCell>
             <TableCell>شماره گذرنامه</TableCell>
