@@ -201,7 +201,7 @@ const ExampleComponent = () => {
       </Grid>
 
       <StyledDialog open={popupOpen} onClose={handleClose}>
-        <DialogTitle>تاریخ پرواز را انتخاب کنید</DialogTitle>
+        <DialogTitle mb={2}>تاریخ پرواز را انتخاب کنید</DialogTitle>
         <DialogContent>
           {selectedAirline && (
             <div>

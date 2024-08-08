@@ -8,13 +8,12 @@ import {
   Alert,
   Paper,
   Grid,
-  Link,
   Checkbox,
   FormControlLabel,
 } from '@mui/material';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -79,7 +78,7 @@ const LoginPage = () => {
             alt="logo"
             style={{ marginBottom: '20px' }}
           />
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" mb={1}>
             خوش آمدید!
           </Typography>
           <Typography variant="subtitle1" color="textSecondary">
@@ -141,6 +140,8 @@ const LoginPage = () => {
               sx={{
                 mt: 3,
                 mb: 2,
+                padding: 2,
+                fontSize: 18,
                 borderRadius: '48px',
                 backgroundColor: '#6200ea',
                 '&:hover': {
@@ -153,15 +154,11 @@ const LoginPage = () => {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2" sx={{ color: '#6200ea' }}>
+                <Link to="/sign-up" variant="body2" sx={{ color: '#6200ea' }}>
                   {'حساب ندارید؟ ثبت نام'}
                 </Link>
               </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {/* Forgot your password? */}
-                </Link>
-              </Grid>
+              <Grid item></Grid>
             </Grid>
           </Box>
         </Box>
