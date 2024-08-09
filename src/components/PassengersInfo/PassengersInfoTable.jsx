@@ -21,7 +21,7 @@ const PassengerTable = () => {
       sx={{
         width: '100%',
         padding: '10px 20px',
-        mb: 2,
+        mb: 5,
         backgroundColor: '#fff',
         borderRadius: 7,
         boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
@@ -30,8 +30,17 @@ const PassengerTable = () => {
         justifyContent: 'space-between',
       }}
     >
-      <TableContainer component={Paper} sx={{ mt: 3 }}>
-        <Typography variant="h6" component="div" sx={{ p: 2 }}>
+      <TableContainer
+        component={Paper}
+        sx={{
+          mt: 2,
+          pb: 3,
+          px: 3,
+          boxShadow: 'none', // Removes the box shadow
+          border: 0, // Removes the border
+        }}
+      >
+        <Typography variant="h6" component="div" sx={{ p: 0, pb: 5 }}>
           اطلاعات مسافران
         </Typography>
         <Table>
@@ -47,7 +56,14 @@ const PassengerTable = () => {
           </TableHead>
           <TableBody>
             {passengers.adults.map((adult) => (
-              <TableRow key={`adult-${adult.id}`}>
+              <TableRow
+                key={`adult-${adult.id}`}
+                sx={{
+                  '&:hover': {
+                    background: 'rgba(0,0,0,0.07)',
+                  },
+                }}
+              >
                 <TableCell>بزرگسال</TableCell>
                 <TableCell>{adult.firstName}</TableCell>
                 <TableCell>{adult.lastName}</TableCell>
@@ -57,7 +73,14 @@ const PassengerTable = () => {
               </TableRow>
             ))}
             {passengers.babies.map((baby) => (
-              <TableRow key={`baby-${baby.id}`}>
+              <TableRow
+                key={`baby-${baby.id}`}
+                sx={{
+                  '&:hover': {
+                    background: 'rgba(0,0,0,0.07)',
+                  },
+                }}
+              >
                 <TableCell>نوزاد</TableCell>
                 <TableCell>{baby.firstName}</TableCell>
                 <TableCell>{baby.lastName}</TableCell>

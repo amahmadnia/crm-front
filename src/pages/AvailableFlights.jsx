@@ -1,7 +1,7 @@
 // src/components/ExampleComponent.js
 import React, { useEffect, useState } from 'react';
 import api from '../utils/api';
-import { extractHourAndMinute } from '../utils/helper';
+import { extractHourAndMinute, formatDate } from '../utils/helper';
 
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import Card from '@mui/material/Card';
@@ -58,6 +58,12 @@ const ExampleComponent = () => {
   }, []);
 
   const handleLearnMoreClick = (flight) => {
+    console.log(flight);
+
+    store.setCurrentFlightInfo({
+      ...store.currentFlightInfo,
+      flightId: flight.id,
+    });
     store.setSelectedFlight(flight);
     navigate(`/flight-reservation`);
   };
@@ -201,7 +207,7 @@ const ExampleComponent = () => {
         ))}
       </Grid>
 
-      <Dialog
+      {/* <Dialog
         open={popupOpen}
         onClose={handleClose}
         PaperProps={{
@@ -242,7 +248,7 @@ const ExampleComponent = () => {
             ثبت و ادامه
           </Button>
         </DialogActions>
-      </Dialog>
+      </Dialog> */}
     </div>
   );
 };

@@ -214,7 +214,7 @@ export default function CustomizedSteppers() {
         );
       case 2:
         return (
-          <Box>
+          <Box width={'90%'}>
             <PassengerInfoTable />
             <PaymentBox />
           </Box>
@@ -286,8 +286,8 @@ export default function CustomizedSteppers() {
             بازگشت
           </CustomButton>
           <Box sx={{ flex: '1 1 auto' }} />
-          <CustomButton onClick={handleNext}>
-            {activeStep === steps.length - 1 ? 'پایان' : 'بعدی'}
+          <CustomButton onClick={handleNext} disabled={activeStep === 2}>
+            بعدی
           </CustomButton>
         </Box>
       </Stack>

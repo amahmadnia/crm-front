@@ -9,6 +9,7 @@ const useStore = create((set) => ({
   currentFlightInfo: {
     date: '',
     airlineName: '',
+    flightId: '',
   },
 
   // profileInfo: {
