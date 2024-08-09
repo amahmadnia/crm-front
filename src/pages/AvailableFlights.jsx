@@ -73,27 +73,46 @@ const ExampleComponent = () => {
 
   return (
     <div>
-      <h2>پرواز های موجود هواپیمایی </h2>
-      {data.length === 0 && (
+      <Grid container spacing={2} pt={1}>
         <Box
-          display="flex"
-          flexDirection="column"
-          alignItems="center"
-          justifyContent="center"
-          pt={10}
+          sx={{
+            width: '100%',
+            padding: '10px 20px',
+            mb: 2,
+            backgroundColor: '#F8F8FC',
+            borderRadius: 7,
+            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
         >
-          <Typography
-            variant="h5"
-            component="div"
-            color="textSecondary"
-            gutterBottom
-          >
-            هیچ پروازی در این تاریخ برای این ایرلاین موجود نیست
+          <Typography variant="h6" gutterBottom>
+            لیست پرواز های موجود
           </Typography>
         </Box>
-      )}
 
-      <Grid container spacing={2} pt={5}>
+        {data.length === 0 && (
+          <Box
+            display="flex"
+            width={'100%'}
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+            pt={10}
+          >
+            <Typography
+              variant="h5"
+              component="div"
+              color="textSecondary"
+              gutterBottom
+              style={{ textAlign: 'center' }}
+            >
+              هیچ پروازی در این تاریخ برای این ایرلاین موجود نیست
+            </Typography>
+          </Box>
+        )}
+
         {data.map((flight) => (
           <Grid item xs={12} sm={6} md={4} key={flight?.id}>
             <Card
@@ -132,7 +151,7 @@ const ExampleComponent = () => {
                 }}
               >
                 <Typography gutterBottom variant="h6" component="div">
-                  شماره پرواز: &nbsp;&nbsp;{flight?.flight_number}
+                  &nbsp;&nbsp;شماره پرواز: &nbsp;&nbsp;{flight?.flight_number}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   <List>
@@ -159,13 +178,15 @@ const ExampleComponent = () => {
                   '&:hover': {
                     backgroundColor: '#e0e0e0',
                   },
+                  display: 'flex',
+                  justifyContent: 'flex-end',
                 }}
               >
                 <Button
                   size="small"
                   onClick={() => handleLearnMoreClick(flight)}
                   sx={{
-                    backgroundColor: '#007bff',
+                    backgroundColor: '#4758B8',
                     color: '#fff',
                     '&:hover': {
                       backgroundColor: '#0056b3',

@@ -8,22 +8,25 @@ const Counter = ({ label, min, max, category }) => {
   const [count, setCount] = useState(min);
   const store = useStore();
 
-  const handleIncrement = (category) => {
-    if (count < max) {
-      setCount(count + 1);
-    }
+  const adultsCount = store.passengers.adults.length;
+  const babiesCount = store.passengers.babies.length;
+  const newCount = category === 'adult' ? adultsCount : babiesCount;
 
-    const newCount = count + 1;
+  const handleIncrement = () => {
+    // if (newCount < max) {
+    //   setCount(count + 1);
+    // }
 
-    category === 'adult'
-      ? store.setPassengerAdultCount(newCount)
-      : store.setPassengerBabyCount(newCount);
+    // console.log(category);
+    // store.addAdult();
+    category === 'adult' ? store.addAdult() : store.addBaby();
   };
 
   const handleDecrement = () => {
-    if (count > min) {
-      setCount(count - 1);
-    }
+    category === 'adult' ? store.removeAdult() : store.removeBaby();
+    // if (count > min) {
+    //   setCount(count - 1);
+    // }
   };
 
   return (
@@ -45,14 +48,18 @@ const Counter = ({ label, min, max, category }) => {
         {label}
       </Typography>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <IconButton onClick={handleDecrement} disabled={count === min}>
+        <IconButton onClick={handleDecrement} disabled={newCount === min}>
           <RemoveCircleOutlineIcon />
         </IconButton>
         <Typography variant="body1" width={30} sx={{ textAlign: 'center' }}>
-          {count}
+          {category === 'adult'
+            ? adultsCount
+            : category === 'baby'
+            ? babiesCount
+            : ''}
           {/* {category === 'adult' ? store. } */}
         </Typography>
-        <IconButton onClick={handleIncrement} disabled={count === max}>
+        <IconButton onClick={handleIncrement} disabled={newCount === max}>
           <AddCircleOutlineIcon />
         </IconButton>
       </Box>

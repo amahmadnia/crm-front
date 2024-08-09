@@ -227,6 +227,11 @@ const ExampleComponent = () => {
           <StyledButton
             onClick={() => {
               store.setSelectedAirlineId(selectedAirline.id);
+              store.setCurrentFlightInfo({
+                date: startDate,
+                airlineName: selectedAirline.name,
+              });
+
               navigate(
                 `/available-flights?id=${selectedAirline.id}&date=${startDate}`
               );

@@ -65,10 +65,27 @@ const PassengerManager = ({ hasSubmitted }) => {
           />
         ))}
         <Stack direction="row" spacing={2} sx={{ mb: 4 }}>
-          <Button variant="contained" color="primary" onClick={addAdult}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={addAdult}
+            sx={{
+              backgroundColor: '#4758B8',
+              color: '#fff',
+              '&:hover': {
+                backgroundColor: '#0056b3',
+              },
+              borderRadius: '48pc',
+            }}
+          >
             افزودن بزرگسال
           </Button>
-          <Button variant="outlined" color="secondary" onClick={removeAdult}>
+          <Button
+            variant="outlined"
+            color="secondary"
+            onClick={removeAdult}
+            sx={{ borderRadius: '48pc' }}
+          >
             حذف بزرگسال
           </Button>
         </Stack>
@@ -81,7 +98,7 @@ const PassengerManager = ({ hasSubmitted }) => {
           backgroundColor: '#fff',
           borderRadius: 7,
           boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-          marginBottom: 10,
+          marginBottom: 5,
         }}
       >
         <Typography variant="h6" gutterBottom pb={3} sx={{ fontSize: 14 }}>
@@ -96,11 +113,30 @@ const PassengerManager = ({ hasSubmitted }) => {
           />
         ))}
         <Stack direction="row" spacing={2}>
-          <Button variant="contained" color="primary" onClick={addBaby}>
-            افزودن کودک
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={addBaby}
+            sx={{
+              backgroundColor: '#4758B8',
+              color: '#fff',
+              '&:hover': {
+                backgroundColor: '#0056b3',
+              },
+              borderRadius: '48pc',
+            }}
+          >
+            افزودن نوزاد
           </Button>
-          <Button variant="outlined" color="secondary" onClick={removeBaby}>
-            حذف کودک
+          <Button
+            variant="outlined"
+            color="secondary"
+            onClick={removeBaby}
+            sx={{
+              borderRadius: '48pc',
+            }}
+          >
+            حذف نوزاد
           </Button>
         </Stack>
       </Box>

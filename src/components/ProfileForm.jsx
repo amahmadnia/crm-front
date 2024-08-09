@@ -22,7 +22,6 @@ const EditForm = () => {
     try {
       const response = await api.post('/accounts/profile/', formData); // Replace with your API endpoint
       setProfile(response.data);
-      toast.success('اطلاعات پروفایل با موفقیت ویرایش شد');
     } catch (err) {
       console.error('Failed to submit form', err);
     }

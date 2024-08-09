@@ -80,7 +80,6 @@ const NavBar = () => {
             flexGrow: 1,
             display: 'flex',
             justifyContent: 'center',
-            marginRight: '-100px',
           }}
         >
           <StyledNavLink to="/">رزرو جایگاه</StyledNavLink>

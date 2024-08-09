@@ -16,12 +16,19 @@ import useStore from './../store';
 import AgeSelector from '../components/PassengerSelector';
 import { Box, Button, Typography } from '@mui/material';
 import PassengerManager from '../components/PassengersForms/PassengersManager';
+import PassengersForm2 from '../components/PassengersForm2';
 import PassengerInfoTable from '../components/PassengersInfo/PassengersInfoTable';
 import PaymentBox from '../components/PassengersInfo/PaymentBox';
+import PeopleIcon from '@mui/icons-material/People';
+import FormatListNumberedRtlIcon from '@mui/icons-material/FormatListNumberedRtl';
+import DoneAllIcon from '@mui/icons-material/DoneAll';
 
 const CustomButton = styled(Button)(({ theme }) => ({
   background: '#BAC0E5',
   color: '#0E1228',
+  padding: '14px 16px',
+  fontSize: 16,
+  borderRadius: '48px',
 }));
 
 const QontoStepIconRoot = styled('div')(({ theme, ownerState }) => ({
@@ -116,9 +123,9 @@ function ColorlibStepIcon(props) {
   const { active, completed, className } = props;
 
   const icons = {
-    1: <SettingsIcon />,
-    2: <GroupAddIcon />,
-    3: <VideoLabelIcon />,
+    1: <PeopleIcon />,
+    2: <FormatListNumberedRtlIcon />,
+    3: <DoneAllIcon />,
   };
 
   return (
@@ -146,13 +153,45 @@ export default function CustomizedSteppers() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
 
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  const validatePassengers = () => {
+    // Helper function to check if all properties of an object are non-empty
+    const allPropsFilled = (person) => {
+      return Object.values(person).every((value) => value !== '');
+    };
 
-    if (activeStep === 1) setHasSubmitted(true);
+    // Check adults array
+    for (const adult of store.passengers.adults) {
+      if (!allPropsFilled(adult)) {
+        return false;
+      }
+    }
+
+    // Check babies array
+    for (const baby of store.passengers.babies) {
+      if (!allPropsFilled(baby)) {
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+  const handleNext = () => {
+    if (activeStep === 1) {
+      setHasSubmitted(true);
+
+      //check empty fields
+      if (validatePassengers()) {
+        setActiveStep(2);
+      }
+    } else {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    }
   };
 
   const handleBack = () => {
+    if (activeStep === 2) setHasSubmitted(false);
+
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
@@ -169,6 +208,7 @@ export default function CustomizedSteppers() {
             {/* <button onClick={() => setHasSubmitted(true)}>
               {String(hasSubmitted)}
             </button> */}
+            {/* <PassengersForm2 /> */}
             <PassengerManager hasSubmitted={hasSubmitted} />
           </>
         );
@@ -187,6 +227,24 @@ export default function CustomizedSteppers() {
   return (
     <>
       <Stack sx={{ width: '100%' }} spacing={4}>
+        <Box
+          sx={{
+            padding: '10px 20px',
+            mb: 0,
+
+            backgroundColor: '#F8F8FC',
+            borderRadius: 7,
+            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          <Typography variant="h6" gutterBottom>
+            پرواز هواپیمایی {store.currentFlightInfo.airlineName} در تاریخ{' '}
+            {store.currentFlightInfo.date}
+          </Typography>
+        </Box>
         <Stepper
           alternativeLabel
           activeStep={activeStep}
@@ -212,7 +270,14 @@ export default function CustomizedSteppers() {
         >
           {renderStepContent(activeStep)}
         </Box>
-        <Box sx={{ display: 'flex', flexDirection: 'row', pt: 10 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            pt: 0,
+            px: 12,
+          }}
+        >
           <CustomButton
             color="inherit"
             disabled={activeStep === 0}

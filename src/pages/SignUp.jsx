@@ -7,39 +7,46 @@ import {
   Typography,
   Alert,
   Paper,
+  Grid,
 } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const SignUpPage = () => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [caravanName, setCaravanName] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    phoneNumber: '',
+    convoyName: '',
+    password: '',
+    confirmPassword: '',
+  });
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError('');
 
     if (
-      !username ||
-      !email ||
-      !phoneNumber ||
-      !caravanName ||
-      !password ||
-      !confirmPassword
+      !formData.username ||
+      !formData.email ||
+      !formData.phoneNumber ||
+      !formData.convoyName ||
+      !formData.password ||
+      !formData.confirmPassword
     ) {
-      setError('تمام فیلدها را پر کنید');
+      setError('لطفا تمامی فیلدها را پر کنید');
       return;
     }
 
-    if (password !== confirmPassword) {
-      setError('رمز عبور و تکرار رمز عبور مطابقت ندارند');
+    if (formData.password !== formData.confirmPassword) {
+      setError('رمزهای عبور مطابقت ندارند');
       return;
     }
 
@@ -49,73 +56,49 @@ const SignUpPage = () => {
       const response = await axios.post(
         'http://127.0.0.1:8000/api/accounts/register/',
         {
-          username,
-          email,
-          phoneNumber,
-          convoyName: caravanName,
-          password,
-          password2: confirmPassword,
+          ...formData,
+          password2: formData.confirmPassword,
           profilePicture: null,
         }
       );
 
-      console.log('Sign up successful:', response.data);
-
-      navigate('/');
+      console.log('Registration successful:', response.data);
+      navigate('/login');
     } catch (err) {
       setError('ثبت نام ناموفق بود');
+      console.error('Registration error:', err);
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <Container
-      component="main"
-      maxWidth="lg"
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '90vh',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-        borderRadius: 2,
-        border: '1px solid rgba(0, 0, 0, 0.1)',
-        backgroundColor: 'rgba(255, 255, 255, 0.8)',
-        mt: 5,
-      }}
-    >
-      <Box
-        sx={{
-          display: 'flex',
-          width: '100%',
-          height: '100%',
-          borderRadius: 2,
-          overflow: 'hidden',
-        }}
-      >
+    <Grid container component="main" sx={{ height: '100vh' }}>
+      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <Box
           sx={{
-            flex: 1,
+            mt: 2,
+            mx: 4,
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'center',
             alignItems: 'center',
-            p: 4,
+            // padding: 3,
           }}
         >
-          <Paper elevation={0}>
-            <img src="main-logo.png" />
-          </Paper>
-          <Typography component="h1" variant="h5">
+          <img
+            src="main-logo.png"
+            alt="logo"
+            style={{ marginBottom: '20px', height: '100px' }}
+          />
+          <Typography component="h1" variant="h5" mb={0}>
             ثبت نام
           </Typography>
+
           <Box
             component="form"
-            onSubmit={handleSubmit}
             noValidate
-            sx={{ mt: 1 }}
-            width={'90%'}
+            onSubmit={handleSubmit}
+            sx={{ mt: 1, width: '100%' }}
           >
             <TextField
               margin="normal"
@@ -126,8 +109,8 @@ const SignUpPage = () => {
               name="username"
               autoComplete="username"
               autoFocus
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={formData.username}
+              onChange={handleChange}
               InputProps={{
                 style: {
                   borderRadius: '48px',
@@ -142,8 +125,8 @@ const SignUpPage = () => {
               label="ایمیل"
               name="email"
               autoComplete="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={formData.email}
+              onChange={handleChange}
               InputProps={{
                 style: {
                   borderRadius: '48px',
@@ -155,11 +138,11 @@ const SignUpPage = () => {
               required
               fullWidth
               id="phoneNumber"
-              label="شماره همراه"
+              label="شماره تلفن"
               name="phoneNumber"
-              autoComplete="phoneNumber"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
+              type="tel"
+              value={formData.phoneNumber}
+              onChange={handleChange}
               InputProps={{
                 style: {
                   borderRadius: '48px',
@@ -170,12 +153,11 @@ const SignUpPage = () => {
               margin="normal"
               required
               fullWidth
-              id="caravanName"
+              id="convoyName"
               label="نام کاروان"
-              name="caravanName"
-              autoComplete="caravanName"
-              value={caravanName}
-              onChange={(e) => setCaravanName(e.target.value)}
+              name="convoyName"
+              value={formData.convoyName}
+              onChange={handleChange}
               InputProps={{
                 style: {
                   borderRadius: '48px',
@@ -187,12 +169,12 @@ const SignUpPage = () => {
               required
               fullWidth
               name="password"
-              label="رمز عبور"
+              label="رمزعبور"
               type="password"
               id="password"
               autoComplete="new-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={formData.password}
+              onChange={handleChange}
               InputProps={{
                 style: {
                   borderRadius: '48px',
@@ -204,12 +186,11 @@ const SignUpPage = () => {
               required
               fullWidth
               name="confirmPassword"
-              label="تکرار رمز عبور"
+              label="تایید رمزعبور"
               type="password"
               id="confirmPassword"
-              autoComplete="new-password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              value={formData.confirmPassword}
+              onChange={handleChange}
               InputProps={{
                 style: {
                   borderRadius: '48px',
@@ -217,7 +198,7 @@ const SignUpPage = () => {
               }}
             />
             {error && (
-              <Alert severity="error" sx={{ borderRadius: '48px', mt: 5 }}>
+              <Alert severity="error" sx={{ borderRadius: '48px', mt: 2 }}>
                 {error}
               </Alert>
             )}
@@ -225,23 +206,37 @@ const SignUpPage = () => {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2, borderRadius: '48px' }}
+              sx={{
+                mt: 3,
+                mb: 2,
+                padding: 2,
+                fontSize: 18,
+                borderRadius: '48px',
+                backgroundColor: '#6200ea',
+                '&:hover': {
+                  backgroundColor: '#3700b3',
+                },
+              }}
               disabled={isLoading}
             >
               {isLoading ? 'در حال بارگذاری...' : 'ثبت نام'}
             </Button>
           </Box>
         </Box>
-        <Box
-          sx={{
-            flex: 1,
-            backgroundImage: 'url(login-bg.jpg)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
-      </Box>
-    </Container>
+      </Grid>
+      <Grid
+        item
+        xs={false}
+        sm={4}
+        md={7}
+        sx={{
+          backgroundImage: 'url(/login-bg-2.jpg)',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      />
+    </Grid>
   );
 };
 

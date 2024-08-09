@@ -48,7 +48,7 @@ const PassengerForm = ({ type, passenger, hasSubmitted }) => {
         mb: 3,
         p: 3,
         border: '1px solid #ccc',
-        borderRadius: 2,
+        borderRadius: '48px',
         boxShadow: 3,
         '&:hover': {
           boxShadow: 6,
@@ -66,6 +66,11 @@ const PassengerForm = ({ type, passenger, hasSubmitted }) => {
             required
             error={errors.firstName}
             helperText={errors.firstName ? 'این فیلد اجباری است' : ''}
+            InputProps={{
+              style: {
+                borderRadius: '48px',
+              },
+            }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -78,6 +83,11 @@ const PassengerForm = ({ type, passenger, hasSubmitted }) => {
             required
             error={errors.lastName}
             helperText={errors.lastName ? 'این فیلد اجباری است' : ''}
+            InputProps={{
+              style: {
+                borderRadius: '48px',
+              },
+            }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -92,16 +102,36 @@ const PassengerForm = ({ type, passenger, hasSubmitted }) => {
             InputLabelProps={{ shrink: true }}
             error={errors.birthDate}
             helperText={errors.birthDate ? 'این فیلد اجباری است' : ''}
+            InputProps={{
+              style: {
+                borderRadius: '48px',
+              },
+            }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <FormControl fullWidth required error={errors.gender}>
+          <FormControl
+            fullWidth
+            required
+            error={errors.gender}
+            sx={{
+              borderRadius: '8px',
+              '& .MuiOutlinedInput-root': { borderRadius: '48px' },
+            }} // Adjusted styling
+          >
             <InputLabel>جنسیت</InputLabel>
             <Select
               label="جنسیت"
               name="gender"
               value={passenger.gender}
               onChange={handleChange}
+              // MenuProps={{ // Ensure the menu also adheres to the border radius
+              //   PaperProps: {
+              //     style: {
+              //       borderRadius: '48px',
+              //     }
+              //   }
+              // }}
             >
               <MenuItem value="">
                 <em>انتخاب کنید</em>
@@ -124,6 +154,11 @@ const PassengerForm = ({ type, passenger, hasSubmitted }) => {
             required
             error={errors.passportNumber}
             helperText={errors.passportNumber ? 'این فیلد اجباری است' : ''}
+            InputProps={{
+              style: {
+                borderRadius: '48px',
+              },
+            }}
           />
         </Grid>
         <Grid item xs={12}>
@@ -135,6 +170,11 @@ const PassengerForm = ({ type, passenger, hasSubmitted }) => {
             fullWidth
             multiline
             rows={1}
+            InputProps={{
+              style: {
+                borderRadius: '48px',
+              },
+            }}
           />
         </Grid>
       </Grid>

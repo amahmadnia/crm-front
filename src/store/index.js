@@ -6,21 +6,23 @@ const useStore = create((set) => ({
   selectedFlight: null,
   selectedAirlineId: null,
 
-  profileInfo: {
-    id: null,
-    username: null,
-    email: null,
-    first_name: null,
-    last_name: null,
-    convoyName: null,
-    phoneNumber: null,
-    profilePicture: null,
+  currentFlightInfo: {
+    date: '',
+    airlineName: '',
   },
-  setProfile: (newProfile) =>
-    set((state) => ({ profile: { ...state.profile, ...newProfile } })),
 
-  passengersAdultCount: 1,
-  passengersBabyCount: 0,
+  // profileInfo: {
+  //   id: null,
+  //   username: null,
+  //   email: null,
+  //   first_name: null,
+  //   last_name: null,
+  //   convoyName: null,
+  //   phoneNumber: null,
+  //   profilePicture: null,
+  // },
+  // setProfile: (newProfile) =>
+  //   set((state) => ({ profile: { ...state.profile, ...newProfile } })),
 
   passengers: {
     adults: [
@@ -36,6 +38,7 @@ const useStore = create((set) => ({
     babies: [],
   },
 
+  setCurrentFlightInfo: (val) => set({ currentFlightInfo: val }),
   login: () => set({ isAuthenticated: true }),
   logout: () => set({ isAuthenticated: false }),
 
@@ -44,18 +47,17 @@ const useStore = create((set) => ({
   setSelectedFlight: (val) => set({ selectedFlight: val }),
   setSelectedAirlineId: (val) => set({ selectedAirlineId: val }),
 
-  setPassengerAdultCount: (val) => set({ passengersAdultCount: val }),
-  setPassengerBabyCount: (val) => set({ passengersBabyCount: val }),
+  // setPassengerAdultCount: (val) => set({ passengersAdultCount: val }),
+  // setPassengerBabyCount: (val) => set({ passengersBabyCount: val }),
 
   addAdult: () =>
     set((state) => ({
-      passengersAdultCount: state.passengersAdultCount + 1,
       passengers: {
         ...state.passengers,
         adults: [
           ...state.passengers.adults,
           {
-            id: state.passengersAdultCount + 1,
+            id: Math.random(),
             firstName: '',
             lastName: '',
             birthDate: '',
@@ -68,7 +70,6 @@ const useStore = create((set) => ({
 
   removeAdult: () =>
     set((state) => ({
-      passengersAdultCount: Math.max(0, state.passengersAdultCount - 1),
       passengers: {
         ...state.passengers,
         adults: state.passengers.adults.slice(0, -1),
@@ -77,13 +78,12 @@ const useStore = create((set) => ({
 
   addBaby: () =>
     set((state) => ({
-      passengersBabyCount: state.passengersBabyCount + 1,
       passengers: {
         ...state.passengers,
         babies: [
           ...state.passengers.babies,
           {
-            id: state.passengersBabyCount + 1,
+            id: Math.random(),
             firstName: '',
             lastName: '',
             birthDate: '',
@@ -96,7 +96,6 @@ const useStore = create((set) => ({
 
   removeBaby: () =>
     set((state) => ({
-      passengersBabyCount: Math.max(0, state.passengersBabyCount - 1),
       passengers: {
         ...state.passengers,
         babies: state.passengers.babies.slice(0, -1),
